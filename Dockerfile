@@ -3,5 +3,6 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt-get update -y
 RUN git clone https://github.com/MicrosoftDocs/mslearn-aks-deployment-pipeline-github-actions /contoso-website
 WORKDIR /contoso-website/src
 RUN git submodule update --init themes/introduction
-RUN hugo && mv public/* /usr/share/nginx/html
+RUN hugo
+RUN mv public/* /usr/share/nginx/html
 EXPOSE 80
