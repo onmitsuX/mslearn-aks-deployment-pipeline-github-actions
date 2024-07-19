@@ -1,10 +1,22 @@
+
+The exit code 100 usually indicates that there is an issue with the package manager or one of the commands in the RUN statement. This could be due to missing dependencies, incorrect URLs, or issues with the package repositories.
+
+Let's debug this step-by-step. I'll modify the Dockerfile to add more logging and split the RUN command into multiple steps for better clarity.
+
+Here's the updated Dockerfile:
+
+Dockerfile
+Copy code
 FROM nginx:1.18
 
-# Install dependencies
+# Update package lists and install basic dependencies
 RUN apt-get update -y && \
-    apt-get install -y curl gnupg && \
-    curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
-    apt-get install -y git nodejs npm
+    apt-get install -y curl gnupg2
+
+# Add Node.js repository and install Node.js and npm
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
+    apt-get update -y && \
+    apt-get install -y git nodejs
 
 # Install Hugo
 RUN curl -sL https://github.com/gohugoio/hugo/releases/download/v0.72.0/hugo_extended_0.72.0_Linux-64bit.tar.gz | \
